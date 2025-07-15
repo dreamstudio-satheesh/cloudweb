@@ -17,8 +17,30 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+
+            $table->string('workos_id')->unique()->nullable();
+            $table->enum('role', ['admin', 'client', 'support', 'billing'])->default('client');
+            $table->enum('status', ['active', 'suspended', 'pending', 'banned'])->default('pending');
+            $table->text('two_factor_secret')->nullable();
+            $table->text('two_factor_recovery_codes')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('tax_id', 50)->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->string('address_line1')->nullable();
+            $table->string('address_line2')->nullable();
+            $table->string('city', 100)->nullable();
+            $table->string('state', 100)->nullable();
+            $table->string('postal_code', 20)->nullable();
+            $table->string('country', 2)->nullable();
+            $table->string('timezone', 50)->default('UTC');
+            $table->string('locale', 10)->default('en');
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip', 45)->nullable();
+            $table->softDeletes();
+            
+            $table->index('status');
             $table->timestamps();
+            $table->rememberToken();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

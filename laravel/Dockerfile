@@ -40,17 +40,14 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 WORKDIR /var/www/html
 
-# Copy application files
-COPY . .
-
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Create necessary directories
+RUN mkdir -p storage/logs storage/framework/{sessions,views,cache} bootstrap/cache
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+ && chmod -R ug+rw storage bootstrap/cache
 
-EXPOSE 9000
+
+EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
