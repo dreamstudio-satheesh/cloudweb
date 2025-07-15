@@ -1,6 +1,4 @@
 
-
-
 # Cloud Hosting Management Platform - Development Requirements
 
 ## Project Overview
