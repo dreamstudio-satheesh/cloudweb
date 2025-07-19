@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Client routes
     Route::middleware(['role:client'])->group(function () {
-        Route::get('/servers', [ServerController::class, 'index'])->name('servers.index');
+        Route::get('/servers', [ServerController::class, 'index'])->name('admin.servers.index');
         Route::get('/servers/create', [ServerController::class, 'create'])->name('servers.create');
         Route::post('/servers', [ServerController::class, 'store'])->name('servers.store');
         Route::get('/servers/{server}', [ServerController::class, 'show'])->name('servers.show');
@@ -85,12 +85,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/users/{user}/activate', [AdminUserController::class, 'activate'])->name('admin.users.activate');
 
 
-        Route::get('servers', [AdminServerController::class, 'index'])->name('servers.index');
-        Route::get('servers/{server}', [AdminServerController::class, 'show'])->name('servers.show');
-        Route::delete('servers/{server}', [AdminServerController::class, 'destroy'])->name('servers.destroy');
-        Route::post('servers/sync', [AdminServerController::class, 'syncAll'])->name('servers.sync');
+        Route::get('servers', [AdminServerController::class, 'index'])->name('admin.servers.index');
+        Route::get('servers/{server}', [AdminServerController::class, 'show'])->name('admin.servers.show');
+        Route::delete('servers/{server}', [AdminServerController::class, 'destroy'])->name('admin.servers.destroy');
+        Route::post('servers/sync', [AdminServerController::class, 'syncAll'])->name('admin.servers.sync');
 
-       // Route::resource('users', Admin\UserController::class);
+
+        // Route::resource('users', Admin\UserController::class);
 
         // Server management
         Route::get('/servers', [AdminServerController::class, 'index'])->name('admin.servers');

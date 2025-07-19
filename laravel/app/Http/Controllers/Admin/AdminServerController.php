@@ -38,14 +38,11 @@ class AdminServerController extends Controller
 
     public function syncAll()
     {
-        // Use admin user for API calls
-        $adminUser = auth()->user();
-        
         try {
-            $apiServers = $this->fastApiService->listServers($adminUser);
+            $apiServers = $this->fastApiService->listServers();
             
             foreach ($apiServers['servers'] as $apiServer) {
-                // Match server to user by name pattern or labels
+                // Match server to user by labels
                 $userId = $this->determineUserId($apiServer);
                 
                 Server::updateOrCreate(
@@ -73,11 +70,8 @@ class AdminServerController extends Controller
 
     private function syncServerStatuses($servers)
     {
-        // Use admin user for API calls
-        $adminUser = auth()->user();
-        
         try {
-            $apiServers = $this->fastApiService->listServers($adminUser);
+            $apiServers = $this->fastApiService->listServers();
             $apiServersById = collect($apiServers['servers'])->keyBy('id');
             
             foreach ($servers as $server) {
@@ -127,9 +121,7 @@ class AdminServerController extends Controller
     public function destroy(Server $server)
     {
         try {
-            // Use admin user for API call
-            $adminUser = auth()->user();
-            $this->fastApiService->deleteServer($adminUser, $server->hetzner_id);
+            $this->fastApiService->deleteServer($server->hetzner_id);
             $server->delete();
             
             return response()->json(['success' => true]);

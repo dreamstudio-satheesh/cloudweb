@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'fastapi' => [
+        'url' => env('FASTAPI_URL', 'http://fastapi:8000'),
+        'internal_key' => env('INTERNAL_API_KEY','QNIu4KuBwPKem'),
+        'timeout' => env('FASTAPI_TIMEOUT', 30),
+        'retries' => env('FASTAPI_RETRIES', 3),
+    ],
+
+
 ];
