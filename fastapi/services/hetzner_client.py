@@ -1,6 +1,6 @@
 import httpx
 import os
-from typing import Dict, Any
+from typing import Dict, Optional, Any
 from utils.exceptions import HetznerAPIException, NetworkException, TimeoutException
 
 class HetznerClient:
@@ -8,9 +8,9 @@ class HetznerClient:
         self.api_token = os.getenv("HETZNER_API_TOKEN")
         if not self.api_token:
             raise HetznerAPIException("HETZNER_API_TOKEN not configured", 500, error_code="MISSING_CONFIG")
-        self.base_url = "https://api.hetzner-cloud.com/v1"
+        self.base_url = "https://api.hetzner.cloud/v1"
         
-    async def _request(self, method: str, endpoint: str, data: Dict = None) -> Dict[str, Any]:
+    async def _request(self, method: str, endpoint: str, data: Optional[Dict] = None) -> Dict[str, Any]:
         headers = {
             "Authorization": f"Bearer {self.api_token}",
             "Content-Type": "application/json"

@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
     container_name: laravel
     ports:
-      - "8001:80"  # Expose Laravel directly
+      - "8001:80"
     volumes:
       - ./laravel:/var/www/html
       - ./shared:/var/www/shared
@@ -57,7 +57,7 @@ services:
       dockerfile: Dockerfile
     container_name: fastapi
     ports:
-      - "8000:8000"  # Expose FastAPI directly
+      - "8000:8000"
     volumes:
       - ./fastapi:/app
       - ./shared:/app/shared
